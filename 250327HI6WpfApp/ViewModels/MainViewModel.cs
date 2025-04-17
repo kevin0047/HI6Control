@@ -15,6 +15,8 @@ namespace _250327HI6WpfApp.ViewModels
 
         private bool _isRemoteMode;
 
+        private bool _isDeadmanEnabled;
+
         private System.Timers.Timer _statusTimer;
 
         public MainViewModel(IRobotService robotService)
@@ -61,7 +63,11 @@ namespace _250327HI6WpfApp.ViewModels
             get => _isRemoteMode;
             set => SetProperty(ref _isRemoteMode, value);
         }
-
+        public bool IsDeadmanEnabled
+        {
+            get => _isDeadmanEnabled;
+            set => SetProperty(ref _isDeadmanEnabled, value);
+        }
         public ICommand CheckConnectionCommand { get; }
         public ICommand GetRobotInfoCommand { get; }
         public ICommand MotorOnCommand { get; }
@@ -154,12 +160,17 @@ namespace _250327HI6WpfApp.ViewModels
 
                 // 원격 모드 상태 확인
                 IsRemoteMode = jsonObject.is_remote_mode == 1;
+
+                // 데드맨 스위치 상태 확인 (enable_state의 1번 바이트 (0: OFF / 1: ON))
+                int enableState = (int)jsonObject.enable_state;
+                IsDeadmanEnabled = ((enableState >> 8) & 0x01) == 1;
             }
             catch (Exception ex)
             {
                 AppendToResponse("로봇 상태 확인 중 오류: " + ex.Message);
                 IsRobotRunning = false;
                 IsRemoteMode = false;
+                IsDeadmanEnabled = false;
             }
         }
         //테스트 기동 메서드
@@ -298,6 +309,8 @@ namespace _250327HI6WpfApp.ViewModels
             moveCommand += "]";
             return moveCommand;
         }
+
+
         public void Dispose()
         {
             _statusTimer?.Stop();

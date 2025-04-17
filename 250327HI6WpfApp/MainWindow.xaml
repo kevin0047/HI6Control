@@ -45,12 +45,13 @@
                    FontSize="24" Foreground="White" HorizontalAlignment="Center" 
                    VerticalAlignment="Center" />
 
+                
                 <!-- 로봇 상태 표시 영역 -->
-                <StackPanel Grid.Column="2" Orientation="Horizontal" Margin="10,0,0,0">
+                <StackPanel Grid.Column="2" Orientation="Vertical" Margin="10,0,0,0">
                     <!-- 로봇 기동 상태 표시 -->
-                    <StackPanel Orientation="Horizontal" Margin="0,0,15,0">
-                        <TextBlock Text="로봇 상태:" Foreground="White" VerticalAlignment="Center" Margin="0,0,5,0"/>
-                        <Ellipse Width="20" Height="20" Margin="0,0,5,0" VerticalAlignment="Center">
+                    <StackPanel Orientation="Horizontal" Margin="0,2,0,2">
+                        <TextBlock Text="로봇 상태:" Foreground="White" VerticalAlignment="Center" Margin="0,0,5,0" Width="100"/>
+                        <Ellipse Width="16" Height="16" Margin="0,0,5,0" VerticalAlignment="Center">
                             <Ellipse.Style>
                                 <Style TargetType="Ellipse">
                                     <Setter Property="Fill" Value="Gray"/>
@@ -77,9 +78,9 @@
                     </StackPanel>
 
                     <!-- 원격 모드 상태 표시 -->
-                    <StackPanel Orientation="Horizontal">
-                        <TextBlock Text="원격 모드:" Foreground="White" VerticalAlignment="Center" Margin="0,0,5,0"/>
-                        <Ellipse Width="20" Height="20" Margin="0,0,5,0" VerticalAlignment="Center">
+                    <StackPanel Orientation="Horizontal" Margin="0,2,0,2">
+                        <TextBlock Text="원격 모드:" Foreground="White" VerticalAlignment="Center" Margin="0,0,5,0" Width="100"/>
+                        <Ellipse Width="16" Height="16" Margin="0,0,5,0" VerticalAlignment="Center">
                             <Ellipse.Style>
                                 <Style TargetType="Ellipse">
                                     <Setter Property="Fill" Value="Red"/>
@@ -98,6 +99,35 @@
                                     <Style.Triggers>
                                         <DataTrigger Binding="{Binding MainViewModel.IsRemoteMode}" Value="True">
                                             <Setter Property="Text" Value="활성"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </TextBlock.Style>
+                        </TextBlock>
+                    </StackPanel>
+
+                    <!-- 데드맨 스위치 상태 표시 (새로 추가) -->
+                    <StackPanel Orientation="Horizontal" Margin="0,2,0,2">
+                        <TextBlock Text="데드맨 스위치:" Foreground="White" VerticalAlignment="Center" Margin="0,0,5,0" Width="100"/>
+                        <Ellipse Width="16" Height="16" Margin="0,0,5,0" VerticalAlignment="Center">
+                            <Ellipse.Style>
+                                <Style TargetType="Ellipse">
+                                    <Setter Property="Fill" Value="Red"/>
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding MainViewModel.IsDeadmanEnabled}" Value="True">
+                                            <Setter Property="Fill" Value="LimeGreen"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Ellipse.Style>
+                        </Ellipse>
+                        <TextBlock VerticalAlignment="Center" Foreground="White">
+                            <TextBlock.Style>
+                                <Style TargetType="TextBlock">
+                                    <Setter Property="Text" Value="해제"/>
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding MainViewModel.IsDeadmanEnabled}" Value="True">
+                                            <Setter Property="Text" Value="누름"/>
                                         </DataTrigger>
                                     </Style.Triggers>
                                 </Style>
