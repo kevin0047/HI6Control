@@ -1,0 +1,15 @@
+<UserControl x:Class="_250327HI6WpfApp.Views.ControlView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <Grid>
+        <StackPanel>
+            <TextBlock Text="로봇 제어 화면" FontSize="24" Margin="0,0,0,20"/>
+
+            <!-- 여기에 로봇 제어 기능들 추가 예정 -->
+            <TextBlock Text="이 화면에서는 로봇을 제어할 수 있는 추가 기능들이 구현될 예정입니다." 
+                       TextWrapping="Wrap" Margin="0,0,0,10"/>
+
+            <!-- 예시: 로봇 이동 제어, 툴 제어 등의 UI를 추가할 수 있음 -->
+        </StackPanel>
+    </Grid>
+</UserControl>

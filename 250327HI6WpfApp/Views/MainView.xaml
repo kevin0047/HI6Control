@@ -1,0 +1,84 @@
+<UserControl x:Class="_250327HI6WpfApp.Views.MainView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <!-- conect check UI -->
+        <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="0,0,0,10">
+            <Button Content="연결 확인" Command="{Binding CheckConnectionCommand}" 
+                    Width="100" Margin="0,0,10,0" Height="30"/>
+            <Ellipse Width="20" Height="20" Margin="0,0,10,0" VerticalAlignment="Center">
+                <Ellipse.Style>
+                    <Style TargetType="Ellipse">
+                        <Setter Property="Fill" Value="Red"/>
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding IsConnected}" Value="True">
+                                <Setter Property="Fill" Value="Green"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Ellipse.Style>
+            </Ellipse>
+            <TextBlock VerticalAlignment="Center">
+                <TextBlock.Style>
+                    <Style TargetType="TextBlock">
+                        <Setter Property="Text" Value="연결 안됨"/>
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding IsConnected}" Value="True">
+                                <Setter Property="Text" Value="연결됨"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </TextBlock.Style>
+            </TextBlock>
+        </StackPanel>
+
+        <!-- 기능 버튼 -->
+		<StackPanel Grid.Row="1" Orientation="Horizontal" Margin="0,0,0,10">
+			<Button Content="로봇 정보 가져오기" Command="{Binding GetRobotInfoCommand}"
+					Width="150" Margin="0,0,10,0" Height="30"/>
+			<Button Content="모터 ON" Command="{Binding MotorOnCommand}"
+					Width="100" Margin="0,0,10,0" Height="30"/>
+			<Button Content="현재 위치" Command="{Binding GetPositionCommand}"
+					Width="100" Margin="0,0,10,0" Height="30"/>
+			<Button Content="테스트 기동" Command="{Binding TestRunCommand}"
+        Width="100" Height="30">
+				<Button.Style>
+					<Style TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
+						<!-- 기본 상태 -->
+						<Setter Property="Background" Value="#3498DB"/>
+						<Setter Property="Foreground" Value="White"/>
+						<Setter Property="FontWeight" Value="Bold"/>
+
+						<!-- 비활성화 상태 -->
+						<Style.Triggers>
+							<Trigger Property="IsEnabled" Value="False">
+								<Setter Property="Background" Value="#CCCCCC"/>
+								<Setter Property="Foreground" Value="#555555"/>
+								<Setter Property="ToolTip" Value="로봇이 이미 기동 중입니다"/>
+							</Trigger>
+							<DataTrigger Binding="{Binding IsRobotRunning}" Value="True">
+								<Setter Property="IsEnabled" Value="False"/>
+							</DataTrigger>
+						</Style.Triggers>
+					</Style>
+				</Button.Style>
+			</Button>
+		</StackPanel>
+
+        <!-- 응답 결과 텍스트 박스 -->
+        <TextBox Grid.Row="2" Text="{Binding ResponseText, Mode=TwoWay}" 
+                 IsReadOnly="True" TextWrapping="Wrap" 
+                 VerticalScrollBarVisibility="Auto" Margin="0,0,0,10"/>
+
+        <!-- 응답 지우기 버튼 -->
+        <Button Grid.Row="3" Content="결과 지우기" Command="{Binding ClearResponseCommand}" 
+                Width="100" Height="30" HorizontalAlignment="Left"/>
+    </Grid>
+</UserControl>
